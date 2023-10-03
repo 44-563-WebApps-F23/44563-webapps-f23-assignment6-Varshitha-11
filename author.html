@@ -45,22 +45,23 @@
     </script>
 
     <div>
-        <img scr="glassgow.jpg" id="img" width="100" height="100" onclick="selectImage()">
+        <p>Please click on the image to see the next image.</p>
+        <img src="glasgow.jpg" id="img" width="100" height="100" onclick="selectImage()"></div>
         <script>
             var useImage=1;
             function selectImage(){
                 switch(useImage)
                 {
                     case 1:
-                        document.getElementById('img').scr="NewYork.jpg";
+                        document.getElementById('img').src="NewYork.jpg";
                         useImage=2;
                         break;
                         case 2:
-                        document.getElementById('img').scr="utrecht.jpg";
+                        document.getElementById('img').src="utrecht.jpg";
                         useImage=3;
                         break;
                         case 3:
-                        document.getElementById('img').scr="glassgow.jpg";
+                        document.getElementById('img').src="glasgow.jpg";
                         useImage=1;
                         break;
 
@@ -68,7 +69,7 @@
                 }
             }
         </script>
-    </div>
+    
 
 </body>
 </html>
