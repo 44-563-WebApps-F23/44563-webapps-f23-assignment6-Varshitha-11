@@ -1,75 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Author Entry</title> 
+    <title>Author Guessing Game</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <header>
-        <h1>Author Entry - Varshitha Gunnala</h1> 
-    </header>
-
+    <div class="container">
+        <h1 class="mt-4">Author Entry Varshitha Gunnala</h1>
+        <form id="authorForm" class="mt-4">
+            <div class="form-group">
+                <label for="secretAuthor">The hidden author name</label>
+                <input type="password" id="secretAuthor" value="Varshitha" class="form-control">
+            </div>
     
-    <form action="/submit" method="post">
-        <label for="secret">The hidden author name:</label>
-        <input type="password" id="secret" name="secret" value="Varshitha" required><br><br>
-        <label for="guess">Guess the author:</label>
-        <input type="text" id="guess" name="guess" required><br><br>
-        <input type="button" value="Check the guess" onclick="checkAuthor()"><br><br>
-        <div id="result"></div>
-    </form>
-    <script>
+            <div class="form-group">
+                <label for="guessAuthor">Guess the author</label>
+                <input type="text" id="guessAuthor" class="form-control">
+            </div>
+            
+            <button type="button" class="btn btn-primary" onclick="checkAuthor()">Check the guess</button>
+        </form>
 
+        <p class="mt-4">Results: <span id="result">Good: 0, Oops: 0</span></p>
+
+        <div id="incorrectGuesses" class="mt-4"></div>
+    </div>
+
+    <script>
+        // Global variables
         var good = 0;
         var oops = 0;
+        var incorrectGuessCount = 0;
 
+        // Function to check the author guess
         function checkAuthor() {
-            var secret = document.getElementById("secret").value;
-            var guess = document.getElementById("guess").value;
+            var secretAuthorInput = document.getElementById("secretAuthor");
+            var guessAuthorInput = document.getElementById("guessAuthor");
             var resultElement = document.getElementById("result");
+            var incorrectGuessesElement = document.getElementById("incorrectGuesses");
 
-            if (guess === secret) {
+            var secretAuthor = secretAuthorInput.value;
+            var guessAuthor = guessAuthorInput.value;
+
+            if (secretAuthor === guessAuthor) {
                 good++;
                 alert("You got it right!");
             } else {
                 oops++;
-                alert("Sorry");
-            }
-            resultElement.innerHTML = "Correct guesses: " + good + "<br>Wrong guesses: " + oops;
+                incorrectGuessCount++;
 
-
-        }
-
-        
-    </script>
-
-    <div>
-        <p>Please click on the image to see the next image.</p>
-        <img src="glasgow.jpg" id="img" width="100" height="100" onclick="selectImage()"></div>
-        <script>
-            var useImage=1;
-            function selectImage(){
-                switch(useImage)
-                {
-                    case 1:
-                        document.getElementById('img').src="NewYork.jpg";
-                        useImage=2;
-                        break;
-                        case 2:
-                        document.getElementById('img').src="utrecht.jpg";
-                        useImage=3;
-                        break;
-                        case 3:
-                        document.getElementById('img').src="glasgow.jpg";
-                        useImage=1;
-                        break;
-
-                    
+                // Display incorrect guess
+                if (incorrectGuessCount <= 7) {
+                    incorrectGuessesElement.innerHTML += `<div class="alert alert-danger">Incorrect guess #${incorrectGuessCount}: ${guessAuthor}</div>`;
+                } else {
+                    // After 7 incorrect guesses, disable the button and show an alert
+                    document.getElementById("guessAuthor").disabled = true;
+                    document.querySelector('button').setAttribute('onclick', 'alert("Sorry, ran out of guesses.")');
                 }
             }
-        </script>
+
+            // Update the result element
+            resultElement.textContent = "Good: " + good + ", Oops: " + oops;
+        }
+    </script>
+<div class="container">
+    <h1 class="mt-4">City Images</h1>
+    <div id="imageContainer">
+        <img id="cityImage" src="glasgow.jpg" alt="City" width="100" height="100" onclick="selectImage()">
+    </div>
+</div>
+    <script>
+        let useImage = 1;
+
+        function selectImage() {
+            switch (useImage) {
+                case 1:
+                    document.getElementById('cityImage').src = 'NewYork.jpg';
+                    useImage = 2;
+                    break;
+                case 2:
+                    document.getElementById('cityImage').src = 'utrecht.jpg';
+                    useImage = 3;
+                    break;
+                case 3:
+                    document.getElementById('cityImage').src = 'glasgow.jpg';
+                    useImage = 1;
+                    break;
+            }
+        }
+    </script>
+
     
 
+    
+    
+    <!-- Add Bootstrap JS and Popper.js (required for Bootstrap) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
