@@ -8,62 +8,46 @@
 <body>
     <div class="container">
         <h1 class="mt-4" style="color: rgb(154, 12, 12);">Author Entry Varshitha Gunnala</h1>
-        <form id="authorForm" class="mt-4">
-            <div class="form-group">
-                <label for="secretAuthor">The hidden author name</label>
-                <input type="password" id="secretAuthor" value="Varshitha" class="form-control">
-            </div>
-    
-            <div class="form-group">
-                <label for="guessAuthor">Guess the author</label>
-                <input type="text" id="guessAuthor" class="form-control">
-            </div>
-            
-            <button type="button" class="btn btn-primary" onclick="checkAuthor()">Check the guess</button>
+        <<form>
+            <label for="hiddenAuthor">The hidden author name:</label>
+            <input type="password" id="hiddenAuthor" value="Varshitha">
+            <br>
+            <label for="GuessAuthor">Guess the author:</label>
+            <input type="text" id="guessAuthor">
+            <br>
+            <input type="button" value="Check the guess" onclick="checkAuthor()">
         </form>
-
-        <p class="mt-4">Results: <span id="result">Good: 0, Oops: 0</span></p>
-
-        <div id="incorrectGuesses" class="mt-4"></div>
-    </div>
-
-    <script>
-        
-        var good = 0;
-        var oops = 0;
-        var incorrectGuessCount = 0;
-
-       
-        function checkAuthor() {
-            var secretAuthorInput = document.getElementById("secretAuthor");
-            var guessAuthorInput = document.getElementById("guessAuthor");
-            var resultElement = document.getElementById("result");
-            var incorrectGuessesElement = document.getElementById("incorrectGuesses");
-
-            var secretAuthor = secretAuthorInput.value;
-            var guessAuthor = guessAuthorInput.value;
-
-            if (secretAuthor === guessAuthor) {
-                good++;
-                alert("You got it right!");
-            } else {
-                oops++;
-                incorrectGuessCount++;
-
-                
-                if (incorrectGuessCount <= 7) {
-                    incorrectGuessesElement.innerHTML += `<div class="alert alert-danger">Incorrect guess #${incorrectGuessCount}: ${guessAuthor}</div>`;
+        <div id="result"></div>
+        <div id="incorrectguess"></div>
+        <script>
+            let good = 0;
+            let oops = 0;
+            let incorrectGuesses = 0;
+            const maxIncorrectGuesses = 7;
+            function checkAuthor() {
+                const hiddenAuthorValue = document.getElementById('hiddenAuthor').value;
+                const guessAuthorValue = document.getElementById('guessAuthor').value;
+                if (hiddenAuthorValue === guessAuthorValue) {
+                    good++;
+                    alert("You got it right!");
                 } else {
-                    // After 7 incorrect guesses, disable the button and show an alert
-                    document.getElementById("guessAuthor").disabled = true;
-                    document.querySelector('button').setAttribute('onclick', 'alert("Sorry, ran out of guesses.")');
+                    oops++;
+                    incorrectGuesses++;
+                    if (incorrectGuesses > maxIncorrectGuesses) {
+                            alert('Sorry, ran out of guesses.');
+                            checkButton.onclick = function () {
+                                alert('Sorry, ran out of guesses.');
+                            }
+                        }
+                    else{
+                    alert("Sorry");
+                    }
                 }
+                const resultElement = document.getElementById('result');
+                resultElement.innerHTML = `Good: ${good}, Oops: ${oops}`;
             }
-
-            // Update the result element
-            resultElement.textContent = "Good: " + good + ", Oops: " + oops;
-        }
-    </script>
+        </script>
+        </body>
 <div class="container">
     <h1 class="mt-4">City Images</h1>
     <div id="imageContainer">
